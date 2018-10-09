@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour {
 
     public float speed;
 
+    public float sprintModifier;
+
     private int count;
     
     void Start()
@@ -25,10 +27,17 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate()
     {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            speed = speed * sprintModifier;
+        }
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
         Vector2 movement = new Vector2(moveHorizontal, moveVertical);
         rb2d.AddForce(movement * speed);
+        if (Input.GetKey(KeyCode.LeftShift)) {
+        speed = speed / sprintModifier;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
